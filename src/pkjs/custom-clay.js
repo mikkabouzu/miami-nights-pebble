@@ -3,10 +3,10 @@ module.exports = function(minified) {
 
   clayConfig.on(clayConfig.EVENTS.AFTER_BUILD, function() {
     clayConfig.getItemById('reset-colors-button').on('click', function() {
-      clayConfig.getItemByMessageKey('HoursColor').set('00FFFF');
-      clayConfig.getItemByMessageKey('MinutesColor').set('FF00FF');
-      clayConfig.getItemByMessageKey('DayColor').set('00FF55');
-      clayConfig.getItemByMessageKey('DateColor').set('00FF55');
+      clayConfig.getItemByMessageKey('HoursColor').set('FFFF00');
+      clayConfig.getItemByMessageKey('MinutesColor').set('FF0000');
+      clayConfig.getItemByMessageKey('DayColor').set('00AAFF');
+      clayConfig.getItemByMessageKey('DateColor').set('00AA55');
       clayConfig.getItemByMessageKey('BackgroundColor').set('000000');
     });
   });
