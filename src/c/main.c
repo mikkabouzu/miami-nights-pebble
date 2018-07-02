@@ -16,13 +16,22 @@ static Layer* window_layer;
 
 TextLayer* date_text_layer;
 static char date_text[] = "\0\0\0\0\0";
-static char dateFormat[] = "%d%m";
+static char dateFormat[] = "%m/%d";
+
 const char DDMMdateFormat[] = "%d%m";
 const char DDMM_FORMAT_KEY[] = "DDMM";
+
+const char DDMMSdateFormat[] = "%d/%m";
+const char DDMMS_FORMAT_KEY[] = "DDMMS";
+
 const char MMDDdateFormat[] = "%m%d";
 const char MMDD_FORMAT_KEY[] = "MMDD";
+
+const char MMDDSdateFormat[] = "%m/%d";
+const char MMDDS_FORMAT_KEY[] = "MM/DD";
+
 const char OFF_FORMAT_KEY[] = "OFF";
-static char PERSISTED_FORMAT[] = "DDMM";
+static char PERSISTED_FORMAT[] = "MMDDS";
 static GFont s_font_teko_sb_20;
 static bool show_date = true;
 

@@ -80,8 +80,16 @@ module.exports = [
             "value":"MMDD",
           },
           {
+            "label":"MM/DD",
+            "value":"MMDDS",
+          },
+          {
             "label":"DDMM",
             "value":"DDMM",
+          },
+          {
+            "label":"DD/MM",
+            "value":"DDMMS",
           },
           {
             "label":"Disabled",
