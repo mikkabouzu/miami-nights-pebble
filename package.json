@@ -1,15 +1,15 @@
 {
-    "author": "Sam Carton",
+    "author": "mikkabouzu",
     "dependencies": {
         "pebble-clay": "^1.0.3"
     },
     "keywords": [],
-    "name": "miami-nights",
+    "name": "miami-nights-extended",
     "pebble": {
         "capabilities": [
             "configurable"
         ],
-        "displayName": "Miami Nights",
+        "displayName": "Miami Nights Extended",
         "enableMultiJS": true,
         "messageKeys": [
             "DateFormat",
@@ -98,7 +98,7 @@
         "targetPlatforms": [
             "basalt"
         ],
-        "uuid": "633c5168-a727-454d-ad8f-34b06834e410",
+        "uuid": "9a95de6c-88a4-4017-8f66-f4eb34532cf2",
         "watchapp": {
             "watchface": true
         }
