@@ -41,8 +41,18 @@
                     "type": "bitmap"
                 },
                 {
+                    "file": "images/9_small.png",
+                    "name": "IMAGE_B_TL_9_SMALLER",
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/8.png",
                     "name": "IMAGE_B_TL_8",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/8_small.png",
+                    "name": "IMAGE_B_TL_8_SMALLER",
                     "type": "bitmap"
                 },
                 {
@@ -51,8 +61,18 @@
                     "type": "bitmap"
                 },
                 {
+                    "file": "images/7_small.png",
+                    "name": "IMAGE_B_TL_7_SMALLER",
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/6.png",
                     "name": "IMAGE_B_TL_6",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/6_small.png",
+                    "name": "IMAGE_B_TL_6_SMALLER",
                     "type": "bitmap"
                 },
                 {
@@ -61,8 +81,18 @@
                     "type": "bitmap"
                 },
                 {
+                    "file": "images/5_small.png",
+                    "name": "IMAGE_B_TL_5_SMALLER",
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/4.png",
                     "name": "IMAGE_B_TL_4",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/4_small.png",
+                    "name": "IMAGE_B_TL_4_SMALLER",
                     "type": "bitmap"
                 },
                 {
@@ -71,8 +101,18 @@
                     "type": "bitmap"
                 },
                 {
+                    "file": "images/3_small.png",
+                    "name": "IMAGE_B_TL_3_SMALLER",
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/2.png",
                     "name": "IMAGE_B_TL_2",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/2_small.png",
+                    "name": "IMAGE_B_TL_2_SMALLER",
                     "type": "bitmap"
                 },
                 {
@@ -81,8 +121,18 @@
                     "type": "bitmap"
                 },
                 {
+                    "file": "images/1_small.png",
+                    "name": "IMAGE_B_TL_1_SMALLER",
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/0.png",
                     "name": "IMAGE_B_TL_0",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/0_small.png",
+                    "name": "IMAGE_B_TL_0_SMALLER",
                     "type": "bitmap"
                 },
                 {
