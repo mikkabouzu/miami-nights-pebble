@@ -555,10 +555,10 @@ void handle_deinit(void) {
 
 int main(void) {  
   settings = (Settings) {
-  	.hours_color = GColorCyan,
-  	.minutes_color = GColorMagenta,
-  	.day_color = GColorMalachite,
-  	.date_color = GColorMalachite,
+  	.hours_color = GColorYellow,
+  	.minutes_color = GColorRed,
+  	.day_color = GColorVividCerulean,
+  	.date_color = GColorJaegerGreen,
   	.background_color = GColorBlack
   };
   
