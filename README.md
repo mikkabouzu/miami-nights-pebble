@@ -1,4 +1,9 @@
-# Miami Nights Watchface
+# Miami Nights Extended Watchface
+
+A tweaked version of [samcarton/miami-nights-pebble](https://github.com/samcarton/miami-nights-pebble).
+
+---
+
 A simple yet striking large-font colored watchface for Pebble Time.
 
 ![Miami Nights](https://github.com/samcarton/miami-nights-pebble/raw/master/Screenshot1984.png)
@@ -8,10 +13,3 @@ Large font is [True Lies by Jonathan S. Harris](http://tattoowoo.com/index.php?m
 Smaller Date font is [Teko (Open Source)](https://www.google.com/fonts/specimen/Teko).
 
 Uses the [GBitmap-Colour-Palette-Manipulator](https://github.com/rebootsramblings/GBitmap-Colour-Palette-Manipulator) library to dynamically change bitmap image colors for hours and minutes.
-
-Get it [On the Pebble App Store](https://apps.getpebble.com/applications/55f56b96c2f17edbde000077)
-
-Todo:
-- Experiment with adding glow effect to digits
-- Make OG Pebble-compatible version
-- More Todos in the github issue tracker
