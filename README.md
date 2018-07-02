@@ -8,6 +8,8 @@ A simple yet striking large-font colored watchface for Pebble Time.
 
 ![Miami Nights Extended](https://github.com/mikkabouzu/miami-nights-pebble/raw/master/screenshot.png)
 
+![Miami Nights Extended with Timeline Quick View](https://github.com/mikkabouzu/miami-nights-pebble/raw/master/screenshot_timeline_quick_view.png)
+
 Large font is [True Lies by Jonathan S. Harris](http://tattoowoo.com/index.php?main_page=product_info&cPath=72&products_id=1678). Digits have been exported and used as PNG assets because a few of the characters are way too big for the pebble font rasterizer.
 
 Smaller Date font is [Teko (Open Source)](https://www.google.com/fonts/specimen/Teko).
