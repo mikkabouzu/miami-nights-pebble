@@ -36,18 +36,13 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/9.png",
-                    "name": "IMAGE_B_TL_9",
-                    "type": "bitmap"
-                },
-                {
                     "file": "images/9_small.png",
                     "name": "IMAGE_B_TL_9_SMALLER",
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/8.png",
-                    "name": "IMAGE_B_TL_8",
+                    "file": "images/9.png",
+                    "name": "IMAGE_B_TL_9",
                     "type": "bitmap"
                 },
                 {
@@ -56,8 +51,8 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/7.png",
-                    "name": "IMAGE_B_TL_7",
+                    "file": "images/8.png",
+                    "name": "IMAGE_B_TL_8",
                     "type": "bitmap"
                 },
                 {
@@ -66,8 +61,8 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/6.png",
-                    "name": "IMAGE_B_TL_6",
+                    "file": "images/7.png",
+                    "name": "IMAGE_B_TL_7",
                     "type": "bitmap"
                 },
                 {
@@ -76,8 +71,8 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/5.png",
-                    "name": "IMAGE_B_TL_5",
+                    "file": "images/6.png",
+                    "name": "IMAGE_B_TL_6",
                     "type": "bitmap"
                 },
                 {
@@ -86,8 +81,8 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/4.png",
-                    "name": "IMAGE_B_TL_4",
+                    "file": "images/5.png",
+                    "name": "IMAGE_B_TL_5",
                     "type": "bitmap"
                 },
                 {
@@ -96,8 +91,8 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/3.png",
-                    "name": "IMAGE_B_TL_3",
+                    "file": "images/4.png",
+                    "name": "IMAGE_B_TL_4",
                     "type": "bitmap"
                 },
                 {
@@ -106,8 +101,8 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/2.png",
-                    "name": "IMAGE_B_TL_2",
+                    "file": "images/3.png",
+                    "name": "IMAGE_B_TL_3",
                     "type": "bitmap"
                 },
                 {
@@ -116,8 +111,8 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/1.png",
-                    "name": "IMAGE_B_TL_1",
+                    "file": "images/2.png",
+                    "name": "IMAGE_B_TL_2",
                     "type": "bitmap"
                 },
                 {
@@ -126,13 +121,18 @@
                     "type": "bitmap"
                 },
                 {
-                    "file": "images/0.png",
-                    "name": "IMAGE_B_TL_0",
+                    "file": "images/1.png",
+                    "name": "IMAGE_B_TL_1",
                     "type": "bitmap"
                 },
                 {
                     "file": "images/0_small.png",
                     "name": "IMAGE_B_TL_0_SMALLER",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/0.png",
+                    "name": "IMAGE_B_TL_0",
                     "type": "bitmap"
                 },
                 {

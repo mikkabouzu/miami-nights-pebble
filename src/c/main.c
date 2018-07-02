@@ -55,11 +55,14 @@ const int TOP_Y_WITH_DATE = 2;
 const int TOP_Y_WITHOUT_DATE = 10;
 
 static int mins_spacing_y = 75;
+const int SMALLER_MINS_SPACING_Y = 55;
 const int MINS_SPACING_Y_WITH_DATE = 75;
 const int MINS_SPACING_Y_WITHOUT_DATE = 79;
 
 static bool show_leading_zero = true;
 static bool left_align_hour = false;
+
+static bool small_screen = false;
 
 typedef struct Settings {
   GColor hours_color;
@@ -81,6 +84,12 @@ const int IMAGE_RESOURCE_IDS[10] = {
   RESOURCE_ID_IMAGE_B_TL_3, RESOURCE_ID_IMAGE_B_TL_4, RESOURCE_ID_IMAGE_B_TL_5,
   RESOURCE_ID_IMAGE_B_TL_6, RESOURCE_ID_IMAGE_B_TL_7, RESOURCE_ID_IMAGE_B_TL_8,
   RESOURCE_ID_IMAGE_B_TL_9
+};
+const int SMALLER_IMAGE_RESOURCE_IDS[10] = {
+  RESOURCE_ID_IMAGE_B_TL_0_SMALLER, RESOURCE_ID_IMAGE_B_TL_1_SMALLER, RESOURCE_ID_IMAGE_B_TL_2_SMALLER,
+  RESOURCE_ID_IMAGE_B_TL_3_SMALLER, RESOURCE_ID_IMAGE_B_TL_4_SMALLER, RESOURCE_ID_IMAGE_B_TL_5_SMALLER,
+  RESOURCE_ID_IMAGE_B_TL_6_SMALLER, RESOURCE_ID_IMAGE_B_TL_7_SMALLER, RESOURCE_ID_IMAGE_B_TL_8_SMALLER,
+  RESOURCE_ID_IMAGE_B_TL_9_SMALLER
 };
 
 const short ONES_SPACINGS[10] = 
@@ -123,8 +132,16 @@ static void unload_bitmap(BitmapLayer** layer, GBitmap** bitmap){
   
 static void load_bitmap(unsigned short image_number, BitmapLayer** layer, GBitmap** bitmap, GColor color, int x, int y)  {  
   unload_bitmap(layer, bitmap);
-    
-  *bitmap = gbitmap_create_with_resource(IMAGE_RESOURCE_IDS[image_number]);
+  
+  int image_id;
+  
+  if (small_screen) {
+    image_id = SMALLER_IMAGE_RESOURCE_IDS[image_number];
+  } else {
+    image_id = IMAGE_RESOURCE_IDS[image_number];
+  }
+  
+  *bitmap = gbitmap_create_with_resource(image_id);
   replace_gbitmap_color(GColorBlack, color, *bitmap, NULL);
   
 #ifdef PBL_PLATFORM_BASALT
@@ -274,6 +291,13 @@ static void handle_tick(struct tm *tick_time, TimeUnits units_changed){
 
 static void update_y_positioning()
 {
+  if(small_screen) {
+    top_y = TOP_Y_WITHOUT_DATE;
+    mins_spacing_y = SMALLER_MINS_SPACING_Y;
+    force_tick();
+    return;
+  }
+  
   if(show_date || show_battery) {
     top_y = TOP_Y_WITH_DATE;
     mins_spacing_y = MINS_SPACING_Y_WITH_DATE;
@@ -338,9 +362,20 @@ static void handle_battery(BatteryChargeState charge_state) {
   force_tick();
 }
 
+void check_screen_size() {
+  GRect full_bounds = layer_get_bounds(window_layer);
+  GRect unobsturcted_bounds = layer_get_unobstructed_bounds(window_layer);
+  small_screen = !grect_equal(&full_bounds, &unobsturcted_bounds);
+  if (small_screen) {
+    top_y = TOP_Y_WITHOUT_DATE;
+    mins_spacing_y = SMALLER_MINS_SPACING_Y;
+  }
+}
 
 static void window_load(Window *window) {    
   window_layer = window_get_root_layer(window);
+  
+  check_screen_size();
   
   s_font_teko_sb_20 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TEKO_SB_20));
   
@@ -540,14 +575,47 @@ void apply_persisted_values() {
   update_colors();
 }
 
+static void prv_unobstructed_will_change(GRect final_unobstructed_screen_area, void *context) {
+  // Get the full size of the screen
+  GRect full_bounds = layer_get_bounds(window_layer);
+  if (!grect_equal(&full_bounds, &final_unobstructed_screen_area)) {
+    small_screen = true;
+    layer_set_hidden(text_layer_get_layer(battery_text_layer), true);
+    layer_set_hidden(text_layer_get_layer(date_text_layer), true);
+    update_y_positioning();
+  }
+}
+
+static void prv_unobstructed_did_change(void *context) {
+  // Get the full size of the screen
+  GRect full_bounds = layer_get_bounds(window_layer);
+  // Get the total available screen real-estate
+  GRect bounds = layer_get_unobstructed_bounds(window_layer);
+  if (grect_equal(&full_bounds, &bounds)) {
+    small_screen = false;
+    layer_set_hidden(text_layer_get_layer(battery_text_layer), !show_battery);
+    layer_set_hidden(text_layer_get_layer(date_text_layer), !show_date);
+    update_y_positioning();
+  }
+}
+
+
 void handle_init(void) {  
   is24hrFormat = clock_is_24h_style();
   
   _window = window_create();
   window_set_background_color(_window, settings.background_color);
-  window_set_window_handlers(_window, (WindowHandlers) {.load = window_load, .unload = window_unload});
+  window_set_window_handlers(_window, (WindowHandlers) {
+    .load = window_load, 
+    .unload = window_unload
+  });
     
   window_stack_push(_window, true);
+   
+  unobstructed_area_service_subscribe((UnobstructedAreaHandlers) {
+    .will_change = prv_unobstructed_will_change, 
+    .did_change = prv_unobstructed_did_change
+  }, NULL);
   
   battery_state_service_subscribe(handle_battery);
   
@@ -560,6 +628,7 @@ void handle_init(void) {
 }
 
 void handle_deinit(void) {
+  unobstructed_area_service_unsubscribe();
   battery_state_service_unsubscribe();
   tick_timer_service_unsubscribe();
   app_message_deregister_callbacks();
