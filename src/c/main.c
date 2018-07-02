@@ -64,7 +64,7 @@ static bool left_align_hour = false;
 typedef struct Settings {
   GColor hours_color;
   GColor minutes_color;
-  GColor day_color;
+  GColor battery_color;
   GColor date_color;
   GColor background_color;
 } Settings;
@@ -354,7 +354,7 @@ static void window_load(Window *window) {
   handle_battery(battery_state_service_peek());
 
   battery_text_layer = text_layer_create(GRect(24, 145, 144, 50));
-  text_layer_set_text_color(battery_text_layer, settings.day_color);
+  text_layer_set_text_color(battery_text_layer, settings.battery_color);
   text_layer_set_background_color(battery_text_layer, GColorClear);
   text_layer_set_text(battery_text_layer, battery_text);
   text_layer_set_font(battery_text_layer, s_font_teko_sb_20);
@@ -392,7 +392,7 @@ static void bt_handler(bool connected) {
 static void update_colors()  {
   window_set_background_color(_window, settings.background_color);
   text_layer_set_text_color(date_text_layer, settings.date_color);
-  text_layer_set_text_color(battery_text_layer, settings.day_color);
+  text_layer_set_text_color(battery_text_layer, settings.battery_color);
 }
 
 
@@ -483,9 +483,9 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     settings.date_color = GColorFromHEX(date_color_t->value->int32);
   }
   
-  Tuple *day_color_t = dict_find(iter, MESSAGE_KEY_DayColor);
-  if (day_color_t) {
-    settings.day_color = GColorFromHEX(day_color_t->value->int32);
+  Tuple *battery_color_t = dict_find(iter, MESSAGE_KEY_BatteryColor);
+  if (battery_color_t) {
+    settings.battery_color = GColorFromHEX(battery_color_t->value->int32);
   }
   
   Tuple *bg_color_t = dict_find(iter, MESSAGE_KEY_BackgroundColor);
@@ -570,7 +570,7 @@ int main(void) {
   settings = (Settings) {
     .hours_color = GColorYellow,
     .minutes_color = GColorRed,
-    .day_color = GColorVividCerulean,
+    .battery_color = GColorVividCerulean,
     .date_color = GColorJaegerGreen,
     .background_color = GColorBlack
   };

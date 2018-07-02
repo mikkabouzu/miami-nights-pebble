@@ -5,7 +5,7 @@ module.exports = function(minified) {
     clayConfig.getItemById('reset-colors-button').on('click', function() {
       clayConfig.getItemByMessageKey('HoursColor').set('FFFF00');
       clayConfig.getItemByMessageKey('MinutesColor').set('FF0000');
-      clayConfig.getItemByMessageKey('DayColor').set('00AAFF');
+      clayConfig.getItemByMessageKey('BatteryColor').set('00AAFF');
       clayConfig.getItemByMessageKey('DateColor').set('00AA55');
       clayConfig.getItemByMessageKey('BackgroundColor').set('000000');
     });

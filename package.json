@@ -19,7 +19,7 @@
             "ShowBattery",
             "HoursColor",
             "MinutesColor",
-            "DayColor",
+            "BatteryColor",
             "DateColor",
             "BackgroundColor"
         ],

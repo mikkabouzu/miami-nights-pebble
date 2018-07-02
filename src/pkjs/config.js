@@ -72,7 +72,7 @@ module.exports = [
       {
         "type": "radiogroup",
         "messageKey": "DateFormat",
-        "defaultValue": "MMDD",
+        "defaultValue": "MMDDS",
         "label": "Date Format",
         "options": [
           {
@@ -109,25 +109,25 @@ module.exports = [
       {
         "type": "color",
         "messageKey": "HoursColor",
-        "defaultValue": "00FFFF",
+        "defaultValue": "FFFF00",
         "label": "Hours"
       },
       {
         "type": "color",
         "messageKey": "MinutesColor",
-        "defaultValue": "FF00FF",
+        "defaultValue": "FF0000",
         "label": "Minutes"
       },
       {
         "type": "color",
-        "messageKey": "DayColor",
-        "defaultValue": "00FF55",
-        "label": "Day Name"
+        "messageKey": "BatteryColor",
+        "defaultValue": "00AAFF",
+        "label": "Battery percentage"
       },
       {
         "type": "color",
         "messageKey": "DateColor",
-        "defaultValue": "00FF55",
+        "defaultValue": "00AA55",
         "label": "Date"
       },
       {
