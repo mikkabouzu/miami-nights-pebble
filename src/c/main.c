@@ -6,7 +6,7 @@
 #define KEY_BT_TOGGLE 1
 #define KEY_LZ_TOGGLE 2
 #define KEY_LA_TOGGLE 3
-#define KEY_DAY_TOGGLE 4
+#define KEY_BATTERY_TOGGLE 4
 #define KEY_SETTINGS 5
   
 static bool is24hrFormat = true;
@@ -35,9 +35,10 @@ static char PERSISTED_FORMAT[] = "MMDDS";
 static GFont s_font_teko_sb_20;
 static bool show_date = true;
 
-TextLayer* day_text_layer;
-static char day_text[] = "\0\0\0\0";
-static bool show_day = true;
+static bool show_battery = true;
+
+TextLayer* battery_text_layer;
+static char battery_text[] = "\0\0\0\0";
 
 static BitmapLayer* hours_tens_layer = NULL;
 static BitmapLayer* hours_ones_layer = NULL;
@@ -62,10 +63,10 @@ static bool left_align_hour = false;
 
 typedef struct Settings {
   GColor hours_color;
-	GColor minutes_color;
-	GColor day_color;
-	GColor date_color;
-	GColor background_color;
+  GColor minutes_color;
+  GColor day_color;
+  GColor date_color;
+  GColor background_color;
 } Settings;
 
 static Settings settings;
@@ -269,15 +270,11 @@ static void handle_tick(struct tm *tick_time, TimeUnits units_changed){
   
   strftime(date_text, sizeof(date_text), dateFormat, tick_time);
   text_layer_set_text(date_text_layer, date_text);
-  
-  strftime(day_text, sizeof(day_text), "%a", tick_time);
-  str_to_upper(day_text);
-  text_layer_set_text(day_text_layer, day_text);
 }
 
 static void update_y_positioning()
 {
-  if(show_date || show_day) {
+  if(show_date || show_battery) {
     top_y = TOP_Y_WITH_DATE;
     mins_spacing_y = MINS_SPACING_Y_WITH_DATE;
     force_tick();
@@ -289,8 +286,8 @@ static void update_y_positioning()
   force_tick();
 }
 
-static void update_show_day(){
-  layer_set_hidden(text_layer_get_layer(day_text_layer), !show_day);
+static void update_show_battery(){
+  layer_set_hidden(text_layer_get_layer(battery_text_layer), !show_battery);
   update_y_positioning();
 }
 
@@ -330,6 +327,18 @@ static void force_tick(){
   handle_tick(tick_time, MINUTE_UNIT);
 }
 
+
+static void handle_battery(BatteryChargeState charge_state) {
+  if (charge_state.is_charging) {
+    snprintf(battery_text, sizeof(battery_text), "~~~");
+  } else {
+    snprintf(battery_text, sizeof(battery_text), "%d%%", charge_state.charge_percent);
+  }
+  
+  force_tick();
+}
+
+
 static void window_load(Window *window) {    
   window_layer = window_get_root_layer(window);
   
@@ -342,12 +351,14 @@ static void window_load(Window *window) {
   text_layer_set_font(date_text_layer, s_font_teko_sb_20);
   layer_add_child(window_layer, text_layer_get_layer(date_text_layer));
   
-  day_text_layer = text_layer_create(GRect(24, 145, 144, 50));
-  text_layer_set_text_color(day_text_layer, settings.day_color);
-  text_layer_set_background_color(day_text_layer, GColorClear);
-  text_layer_set_text(day_text_layer, day_text);
-  text_layer_set_font(day_text_layer, s_font_teko_sb_20);
-  layer_add_child(window_layer, text_layer_get_layer(day_text_layer));
+  handle_battery(battery_state_service_peek());
+
+  battery_text_layer = text_layer_create(GRect(24, 145, 144, 50));
+  text_layer_set_text_color(battery_text_layer, settings.day_color);
+  text_layer_set_background_color(battery_text_layer, GColorClear);
+  text_layer_set_text(battery_text_layer, battery_text);
+  text_layer_set_font(battery_text_layer, s_font_teko_sb_20);
+  layer_add_child(window_layer, text_layer_get_layer(battery_text_layer));
     
   app_message_register_inbox_received(inbox_received_handler);
   app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
@@ -359,7 +370,7 @@ static void window_load(Window *window) {
 
 static void window_unload(Window *window) {
   text_layer_destroy(date_text_layer);
-  text_layer_destroy(day_text_layer);
+  text_layer_destroy(battery_text_layer);
   fonts_unload_custom_font(s_font_teko_sb_20);
   unload_bitmap(&hours_tens_layer, &hours_tens);
   unload_bitmap(&hours_ones_layer, &hours_ones);
@@ -381,7 +392,7 @@ static void bt_handler(bool connected) {
 static void update_colors()  {
   window_set_background_color(_window, settings.background_color);
   text_layer_set_text_color(date_text_layer, settings.date_color);
-  text_layer_set_text_color(day_text_layer, settings.day_color);
+  text_layer_set_text_color(battery_text_layer, settings.day_color);
 }
 
 
@@ -416,19 +427,19 @@ static void inbox_received_handler(DictionaryIterator *iter, void *context) {
     persist_write_string(KEY_DATE_FORMAT, date_format_t->value->cstring);
   }
   
-  Tuple* show_day_t = dict_find(iter, MESSAGE_KEY_ShowDay);
-  if(show_day_t && show_day_t->value->int32 > 0) {
-    show_day = true;
-    update_show_day();
+  Tuple* show_battery_t = dict_find(iter, MESSAGE_KEY_ShowBattery);
+  if(show_battery_t && show_battery_t->value->int32 > 0) {
+    show_battery = true;
+    update_show_battery();
     
     // Persist value
-    persist_write_bool(KEY_DAY_TOGGLE, true);    
+    persist_write_bool(KEY_BATTERY_TOGGLE, true);    
   } else {
-    show_day = false;
-    update_show_day();
+    show_battery = false;
+    update_show_battery();
     
     // persist
-    persist_write_bool(KEY_DAY_TOGGLE, false);
+    persist_write_bool(KEY_BATTERY_TOGGLE, false);
   }
   
   Tuple* leading_zero_toggle_t = dict_find(iter, MESSAGE_KEY_LeadingZero);
@@ -496,10 +507,10 @@ void apply_persisted_values() {
     set_date_format(PERSISTED_FORMAT);
   }
   
-  if(persist_exists(KEY_DAY_TOGGLE)){
-    show_day = persist_read_bool(KEY_DAY_TOGGLE);
+  if(persist_exists(KEY_BATTERY_TOGGLE)){
+    show_battery = persist_read_bool(KEY_BATTERY_TOGGLE);
     
-    update_show_day();
+    update_show_battery();
   }
   
   if(persist_exists(KEY_BT_TOGGLE)){
@@ -538,6 +549,7 @@ void handle_init(void) {
     
   window_stack_push(_window, true);
   
+  battery_state_service_subscribe(handle_battery);
   
   tick_timer_service_subscribe(MONTH_UNIT | DAY_UNIT | HOUR_UNIT | MINUTE_UNIT 
 #ifdef DEBUGTIME                               
@@ -548,6 +560,7 @@ void handle_init(void) {
 }
 
 void handle_deinit(void) {
+  battery_state_service_unsubscribe();
   tick_timer_service_unsubscribe();
   app_message_deregister_callbacks();
   window_destroy(_window);
@@ -555,11 +568,11 @@ void handle_deinit(void) {
 
 int main(void) {  
   settings = (Settings) {
-  	.hours_color = GColorYellow,
-  	.minutes_color = GColorRed,
-  	.day_color = GColorVividCerulean,
-  	.date_color = GColorJaegerGreen,
-  	.background_color = GColorBlack
+    .hours_color = GColorYellow,
+    .minutes_color = GColorRed,
+    .day_color = GColorVividCerulean,
+    .date_color = GColorJaegerGreen,
+    .background_color = GColorBlack
   };
   
   handle_init();

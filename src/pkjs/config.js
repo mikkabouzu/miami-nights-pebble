@@ -51,14 +51,14 @@ module.exports = [
     "items": [
       {
         "type": "heading",
-        "defaultValue": "Day Display"
+        "defaultValue": "Battery Display"
       },
       {
         "type": "toggle",
-        "messageKey": "ShowDay",
+        "messageKey": "ShowBattery",
         "defaultValue": true,
-        "label": "Show Day Name",
-        "description" : "Show the abbreviated weekday name."
+        "label": "Show Battery percentage",
+        "description" : "Show the current battery percentage (~~~ if charging)."
       },
     ]
   },

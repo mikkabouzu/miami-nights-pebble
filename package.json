@@ -16,7 +16,7 @@
             "Bluetooth",
             "LeadingZero",
             "LeftAlign",
-            "ShowDay",
+            "ShowBattery",
             "HoursColor",
             "MinutesColor",
             "DayColor",
@@ -86,7 +86,7 @@
                     "type": "bitmap"
                 },
                 {
-                    "characterRegex": "[0-9:A-Za-z /]",
+                    "characterRegex": "[0-9:A-Za-z /%~]",
                     "file": "fonts/Teko-SemiBold.ttf",
                     "name": "FONT_TEKO_SB_20",
                     "targetPlatforms": null,
