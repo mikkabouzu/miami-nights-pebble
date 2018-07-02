@@ -1,11 +1,11 @@
 module.exports = [
   {
     "type": "heading",
-    "defaultValue": "Miami Nights Config"
+    "defaultValue": "Miami Nights Extended Config"
   },
   {
     "type": "text",
-    "defaultValue": "by Sam Carton - V1.3"
+    "defaultValue": "made with <3"
   },
   {
     "type": "section",
